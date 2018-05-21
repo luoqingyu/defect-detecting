@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="dba0a973-abaa-4794-93ab-d67bbf200475" name="10.117.63.33" url="http://10.117.63.33">
+        <fileTransfer host="10.117.63.33" port="22" rootFolder="/home/lqy" accessType="SFTP">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
