@@ -36,10 +36,9 @@ def process_img(img_path,show_process_img = True):
     ###霍夫变换
     #最后说明多少个点决定一条直线
     input_img  = canny_img.copy()
-    lines = cv2.HoughLines(input_img ,1,np.pi/10,40) #这里对最后一个参数使用了经验型的值
+    lines = cv2.HoughLines(input_img ,1,np.pi/10,30) #这里对最后一个参数使用了经验型的值
     lines1 = lines[:,0,:]#提取为为二维
     for rho,theta in lines1[:]:
-        print (rho,theta)
         a = np.cos(theta)
         b = np.sin(theta)
         x0 = a*rho
@@ -48,7 +47,6 @@ def process_img(img_path,show_process_img = True):
         y1 = int(y0 + 1000*(a))
         x2 = int(x0 - 1000*(-b))
         y2 = int(y0 - 1000*(a))
-        #print(x1,y1,x2,y2)
         input_img = cv2.line(input_img,(x1,y1),(x2,y2),(255,0,0),2)
 
     if show_process_img:
@@ -92,7 +90,7 @@ def get_point(lines1):
         for z in rhos:
             if (abs(k[0]-z)<10):
                 biaozhi =False
-                print(False)
+                #print(False)
         if(biaozhi):
             rhos.append(k[0])
 
@@ -104,7 +102,7 @@ def get_point(lines1):
         list_rhbos = []
         list_theta = []
         for k in lines1[:]:
-            print(k[0])
+            #print(k[0])
             if (abs(k[0]-z)<10):
                 list_rhbos.append(k[0])
                 list_theta.append(k[1])
