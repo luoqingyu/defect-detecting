@@ -199,15 +199,15 @@ def extract_poly_patch(im, points):
         if not patch.size:
             return None
         else:
-            cv2.imwrite('test.jpg', patch)
             return patch
 
 
 def main():
-    im_path = '/home/citybuster/program/TextDetectionEvaluationTool_Interface/gt/img_1.jpg'
+    im_path = 'For test, please set your im_path'
     im = cv2.imread(im_path)
-    points = [637,450,9,459,631,371,11,375]
-    extract_poly_patch(im, points)
+    points = [637, 450, 9, 459, 631, 371, 11, 375]
+    patch = extract_poly_patch(im, points)
+    cv2.imwrite('test.jpg', patch)
 
 
 if __name__ == '__main__':
