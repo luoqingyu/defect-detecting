@@ -1,7 +1,9 @@
 #-*- coding: UTF-8 -*-
+""""
+读取图片，计算灰度直方图，二值化测试
+"""
 import  numpy as np
 import  cv2
-#
 def calcAndDrawHist(image, color):
     hist = cv2.calcHist([image], [0], None, [256], [0.0, 255.0])
     minVal, maxVal, minLoc, maxLoc = cv2.minMaxLoc(hist)
