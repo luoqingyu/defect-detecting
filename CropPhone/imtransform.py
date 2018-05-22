@@ -161,7 +161,12 @@ def extract_poly_patch(im, points):
     box = np.int0(box)
     x, y, w, h = cv2.boundingRect(box)
 
-    im_mask = cv2.drawContours(im_mask, [poly_region], 0, (0, 0, 0), -1)
+    # visualize the results
+    # cv2.drawContours(im, [box], 0, (0, 0, 255), 10)
+    # cv2.rectangle(im, (x, y), (x + w, y + h), (0, 255, 0), 10)
+    # cv2.imwrite('vis.jpg', im)
+
+    im_mask = cv2.drawContours(im_mask, [box], 0, (0, 0, 0), -1)
     img2gray = cv2.cvtColor(im_mask, cv2.COLOR_BGR2GRAY)
 
     ret, mask = cv2.threshold(img2gray, 1, 255, cv2.THRESH_BINARY)
@@ -187,13 +192,7 @@ def extract_poly_patch(im, points):
             angle = rect[2]
         im_rotated = imutils.rotate_bound(im_fg, angle)
 
-        if rect[1][0] > rect[1][1]:
-            r_w = rect[1][0]
-            r_h = rect[1][1]
-        else:
-            r_w = rect[1][1]
-            r_h = rect[1][0]
-        x1, x2, y1, y2 = get_region(im_rotated.shape[:2], r_w, r_h)
+        x1, x2, y1, y2 = get_region(im_rotated.shape[:2], rect[1][0], rect[1][1])
         patch = im_rotated[y1:y2, x1:x2, :]
 
         if not patch.size:
@@ -203,9 +202,9 @@ def extract_poly_patch(im, points):
 
 
 def main():
-    im_path = 'For test, please set your im_path'
+    im_path = 'IMG_2565.JPG'
     im = cv2.imread(im_path)
-    points = [637, 450, 9, 459, 631, 371, 11, 375]
+    points = [1770, 3715, 1770, 115, 3460, 116, 3460, 3716]
     patch = extract_poly_patch(im, points)
     cv2.imwrite('test.jpg', patch)
 
