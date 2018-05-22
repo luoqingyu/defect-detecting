@@ -1,3 +1,6 @@
+"""
+计算两条直线的交点
+"""""
 def line(p1, p2):
     A = (p1[1] - p2[1])
     B = (p2[0] - p1[0])
@@ -20,6 +23,6 @@ L2 = line([-1000,78], [999,79])             #(-1000, 78, 999, 79)
 
 R = intersection(L1, L2)
 if R:
-    print "Intersection detected:", R
+    print ("Intersection detected:", R)
 else:
-    print "No single intersection point detected"
+    print ("No single intersection point detected")

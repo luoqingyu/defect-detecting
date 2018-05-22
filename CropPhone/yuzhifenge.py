@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import  numpy as np
 #1.读取灰度图像
 #img = cv2.imread('/home/public/Datas/phone/iphone_data/IMG_2380.JPG', 0)  # 直接读为灰度图像
-img = cv2.imread('/home/public/Datas/phone/hei/IMG_2561.JPG', 0)  # 直接读为灰度图像
+img = cv2.imread('/home/public/Datas/phone/hei/IMG_2564.JPG', 0)  # 直接读为灰度图像
 #img = cv2.imread('/home/lqy/1.JPG', 0)
 
 
@@ -61,7 +61,7 @@ cv2.imshow("detection bianjie", input_img)
 ###霍夫变换
 #最后说明多少个点决定一条直线
 input_img  = canny_img1
-lines = cv2.HoughLines(input_img ,1,np.pi/10,50) #这里对最后一个参数使用了经验型的值
+lines = cv2.HoughLines(input_img ,1,np.pi/10,40) #这里对最后一个参数使用了经验型的值
 lines1 = lines[:,0,:]#提取为为二维
 for rho,theta in lines1[:]:
     print (rho,theta)
@@ -82,7 +82,7 @@ cv2.imshow('HF', input_img)
 print (lines1)
 
 #将直线减少到四条
-print lines
+print (lines)
 rhos = []
 rhos.append(lines1[0][0])
 for  k in lines1[:]:
@@ -93,7 +93,7 @@ for  k in lines1[:]:
             print(False)
     if(biaozhi):
         rhos.append(k[0])
-print  rhos
+print  (rhos)
 
 
 #求四条直线平均值
@@ -108,7 +108,7 @@ for z in rhos:
             list_theta.append(k[1])
     print (z,list_theta,list_rhbos)
     ave_line.append ( [int( sum(list_rhbos)/len(list_rhbos)),sum(list_theta)/len(list_theta)])
-print ave_line
+print (ave_line)
 
 
 
@@ -171,7 +171,7 @@ for k in ave_line:
 #去除重复交点
 jiaodian_quchong = list(set(jiaodian))
 #截取分割的图片
-
+print(jiaodian_quchong)
 
 
 
