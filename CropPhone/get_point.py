@@ -8,7 +8,7 @@
 import cv2
 import  numpy as np
 
-def process_img(img_path,show_process_img = True):
+def process_img(img_path,mix_erzhi = 110,max_erzhi = 250,huofu_point_num=40 ,show_process_img = True):
     """
      If the coordinate of points exceeds the image region,
      then truncate it and make sure it inside the image region
@@ -30,13 +30,13 @@ def process_img(img_path,show_process_img = True):
     resize_img = cv2.resize(img,(weight,height),0)
     # 二值化图像
     #ret, thresh1 = cv2.threshold(img, 1, 255, cv2.THRESH_BINARY)
-    ret, thresh2 = cv2.threshold(resize_img, 110, 250,cv2.THRESH_BINARY )
+    ret, thresh2 = cv2.threshold(resize_img, mix_erzhi, max_erzhi,cv2.THRESH_BINARY )
     #canny算子检测边缘
     canny_img = cv2.Canny(thresh2, 100, 100)
     ###霍夫变换
     #最后说明多少个点决定一条直线
     input_img  = canny_img.copy()
-    lines = cv2.HoughLines(input_img ,1,np.pi/10,30) #这里对最后一个参数使用了经验型的值
+    lines = cv2.HoughLines(input_img ,1,np.pi/60,huofu_point_num) #这里对最后一个参数使用了经验型的值
     lines1 = lines[:,0,:]#提取为为二维
     for rho,theta in lines1[:]:
         a = np.cos(theta)
@@ -88,7 +88,7 @@ def get_point(lines1):
     for  k in lines1[:]:
         biaozhi =True
         for z in rhos:
-            if (abs(k[0]-z)<10):
+            if (abs(k[0]-z)<30):
                 biaozhi =False
                 #print(False)
         if(biaozhi):
@@ -103,7 +103,7 @@ def get_point(lines1):
         list_theta = []
         for k in lines1[:]:
             #print(k[0])
-            if (abs(k[0]-z)<10):
+            if (abs(k[0]-z)<30):
                 list_rhbos.append(k[0])
                 list_theta.append(k[1])
         print (z,list_theta,list_rhbos)
@@ -143,7 +143,7 @@ def get_two_point_line(rho,theta):
 
 
 def main():
-    img_path = '/home/public/Datas/phone/hei/IMG_2564.JPG'
+    img_path = '/home/public/Datas/phone/hei/IMG_2567.JPG'
     line1 = process_img(img_path = img_path )     #处理图片
     jiaodian_quchong = get_point(line1)      #获取交点
     print(jiaodian_quchong)
