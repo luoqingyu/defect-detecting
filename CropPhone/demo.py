@@ -7,7 +7,8 @@ import numpy as np
 def main():
     img_path = '/home/public/Datas/phone/hei/IMG_2565.JPG'
     im = cv2.imread(img_path)
-    line1 = process_img(img_path = img_path )     #处理图片
+    im1=im.copy()
+    line1 = process_img(img_path = img_path,mix_erzhi=75,max_erzhi=250,huofu_point_num = 40 )     #处理图片
     jiaodian_quchong = get_point(line1)      #获取交点
     print(jiaodian_quchong)
     # im = cv2.imread(img_path)
@@ -23,7 +24,8 @@ def main():
     cv2.resizeWindow("point", 640, 480)
     cv2.imshow('point', im)
     print(points)
-    extract_poly_patch(im, points)
+    pointss = [1770, 3715, 1770, 115, 3460, 116, 3460, 3716]
+    #extract_poly_patch(im1, points)
     if cv2.waitKey(0) == 27:     #ese  drop out
         cv2.destroyAllWindows()
 
