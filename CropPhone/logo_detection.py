@@ -60,12 +60,13 @@ for bianjie_y in range(len(bianjie)):
         print(bianjie_y)
         cut_pic.append( thresh2[:,bianjie[bianjie_y]:bianjie[bianjie_y+1]])
 
-for i in cut_pic:
-    print(i.shape)
+
+
 
 
 for i, pic in enumerate(cut_pic):
     win3 = cv2.namedWindow(str(i), flags=0)
+    cv2.imwrite('../data/cut_result/' + str(i) + '.jpg', pic)
     cv2.imshow(str(i), pic)
 
 # canny算子检测边缘
