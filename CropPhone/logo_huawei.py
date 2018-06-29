@@ -35,18 +35,19 @@ cv2.imshow('reshape', resize_img)
 
 # 二值化图像
 # ret, thresh1 = cv2.threshold(img, 1, 255, cv2.THRESH_BINARY)
-ret, thresh2 = cv2.threshold(resize_img,50, 250, cv2.THRESH_BINARY)
+ret, thresh2 = cv2.threshold(resize_img,115, 256, cv2.THRESH_BINARY)
 win = cv2.namedWindow('two mode', flags=0)
 cv2.imshow('two mode', thresh2)
 sum_white = thresh2.sum(axis=0)
 bianjie = []
 flag = 0
+print(sum_white)
 for i, val in enumerate(sum_white):
-    if val<17500 and flag ==0:
+    if val<17000 and flag ==0:
         bianjie.append(i)
         flag = 1
 
-    if val> 17500 and flag == 1:
+    if val> 17000 and flag == 1:
         bianjie.append(i)
         flag = 0
 
@@ -66,8 +67,13 @@ for bianjie_y in range(len(bianjie)):
 
 for i, pic in enumerate(cut_pic):
     win3 = cv2.namedWindow(str(i), flags=0)
-    #cv2.imwrite('../data/cut_result/' + str(i) + '.jpg', pic)
+    cv2.imwrite('../data/huaweicut/' + str(i) + '.jpg', pic)
     cv2.imshow(str(i), pic)
+
+
+
+
+
 
 if cv2.waitKey(0) == 27:  # ese  drop out
     cv2.destroyAllWindows()
