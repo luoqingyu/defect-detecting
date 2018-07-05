@@ -5,7 +5,7 @@ from imtransform import  *
 import matplotlib.pyplot as plt
 import numpy as np
 def main():
-    img_path = '/home/public/Datas/phone/hei/IMG_2565.JPG'
+    img_path = '/home/public/Datas/phone/hei/IMG_2568.JPG'
     im = cv2.imread(img_path)
     im1=im.copy()
     line1 = process_img(img_path = img_path,mix_erzhi=75,max_erzhi=250,huofu_point_num = 40 )     #处理图片
