@@ -2,7 +2,7 @@ import cv2 as cv
 import numpy as np
 from matplotlib import pyplot as plt
 import os
-img_path = '/home/lqy/Data/phone/628/3/'
+img_path = '/home/lqy/628/3/'
 template = cv.imread('/home/lqy/628/cut.bmp', 0)
 result_path = '/home/lqy/628/3_result/'
 crop_path = '/home/lqy/628/3_result/cut/'
@@ -30,7 +30,9 @@ for im_name in im_names:
         method = eval(meth)
         # Apply template Matching
         res = cv.matchTemplate(img, template, method)
+        print(res)
         min_val, max_val, min_loc, max_loc = cv.minMaxLoc(res)
+
         # If the method is TM_SQDIFF or TM_SQDIFF_NORMED, take minimum
         if method in [cv.TM_SQDIFF, cv.TM_SQDIFF_NORMED]:
             top_left = min_loc
