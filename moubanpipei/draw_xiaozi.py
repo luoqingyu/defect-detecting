@@ -15,7 +15,8 @@ def eachFile(filepath):
     return  full_child_file_list,child_file_name
 
 
-img_path = '/home/lqy/Data/phone/628-chhose/2/Image__2018-06-28__11-34-40.bmp'
+img_path= '/home/lqy/628/2/Image__2018-06-28__11-34-12.bmp'
+#img_path = '/home/lqy/Data/phone/628-chhose/2/Image__2018-06-28__11-34-40.bmp'
 img = cv.imread(img_path, 0)
 template_dir = '/home/lqy/Data/phone/628-data-add10_5/2_cut/'
 result_path = '/home/lqy/628/2_result/'
