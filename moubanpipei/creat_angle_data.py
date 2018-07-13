@@ -1,10 +1,13 @@
 # -*- coding: UTF-8 -*-
+'''
+根据一张图像模板，旋转该图片生成多角度模板
+'''
 import cv2
 import numpy  as np
 import  random
-# 读取图像
 import cv2 as cv
 import os
+
 def mkdir(path):  # 判断是否存在指定文件夹，不存在则创建
     # 引入模块
     import os
@@ -27,6 +30,7 @@ def mkdir(path):  # 判断是否存在指定文件夹，不存在则创建
         return True
     else:
         return False
+
 # 遍历指定目录，显示目录下的所有文件名
 def eachFile(filepath):
     pathDir =  os.listdir(filepath)
@@ -38,11 +42,20 @@ def eachFile(filepath):
         full_child_file_list.append(child)
         child_file_name.append(allDir)
     return  full_child_file_list,child_file_name
+
+#根据选择的角度和尺度创建图片
+'''
+im_name:待处理的图片
+angle: 图片旋转的角度
+Scale：图片变换的尺度  这里默认为0，5代表尺度变化正负5%
+num_img:需要生成的图片数目
+result_dir:生成图片的位置
+'''
 def creat_img(im_name,angle, Scale,num_img,result_dir):
     print(im_name)
     img = cv2.imread(im_name, 0)
     w_img, h_img = img.shape[::-1]
-    angles = np.linspace(-angle,angle,40)
+    angles = np.linspace(-angle,angle,num_img)
     for i in angles:
         change_Scale = random.uniform(1-Scale/100.,1+Scale/100.)
         # Scale_img = cv2.resize(img2,change_Scale)
