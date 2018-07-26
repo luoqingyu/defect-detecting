@@ -57,12 +57,15 @@ def creat_img(im_name,angle, Scale,num_img,result_dir):
     w_img, h_img = img.shape[::-1]
     angles = np.linspace(-angle,angle,num_img)
     for i in angles:
+        #随机化一个图片尺度变化值
         change_Scale = random.uniform(1-Scale/100.,1+Scale/100.)
         # Scale_img = cv2.resize(img2,change_Scale)
+        #对图片进行旋转
         M = cv2.getRotationMatrix2D((w_img / 2, h_img / 2),i, change_Scale)
         dst = cv2.warpAffine(img, M, (w_img, h_img))
-        result_dir =  result_dir
+        #生成新图片的名称
         img_result_file = result_dir  + str(i)+ '_' + str(change_Scale)+ '.bmp'
+        #写入新图片
         cv.imwrite(img_result_file, dst)
 
 def get_result(img_path,template_path,result_path,crop_path):

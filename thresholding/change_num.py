@@ -1,6 +1,6 @@
 import cv2
 def change_num(x):
-    img = cv2.imread('/home/lqy/python_scripy/defect-detecting/canny/data/demo.bmp', 0)  # 直接读为灰度图像
+    img = cv2.imread('./demo.bmp', 0)  # 直接读为灰度图像
     # 二值化图像
     #ret, thresh1 = cv2.threshold(img, 1, 255, cv2.THRESH_BINARY)
     low = cv2.getTrackbarPos('Low', 'image')

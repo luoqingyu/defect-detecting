@@ -71,21 +71,17 @@ def get_once_matching_result(num, dict_angle_img_name, dict_angle_img_result, li
 
 
 def get_highesr_scores(template_dir, img_path, result_dir):
-    p = Pool(40)
+    p = Pool(20)
     mkdir( result_dir + '/cut')
     mkdir(result_dir + '/process')
     mkdir(result_dir + '/show_error')
-    mkdir(result_dir + '/dingmao')
-    mkdir(result_dir + '/dingmao_result')
-    mkdir(result_dir + '/add_result')
-
     img = cv.imread(img_path, 0)
     img1 = img.copy
     full_dir, dir = eachFile(template_dir)
     dict_angle_img_name = Manager().dict()  # 主进程与子进程共享这个字典
     dict_angle_img_result = Manager().dict()  # 主进程与子进程共享这个字典
     dict_angle_img_name['1.0'] = 56
-    x = range(800)
+    x = range(80)
     list_scores = Manager().list(x)  # 主进程与子进程共享这个List
     list_names = Manager().list(x)
     for num, template_img in enumerate(full_dir):
@@ -96,7 +92,7 @@ def get_highesr_scores(template_dir, img_path, result_dir):
     numpy_scores = np.array(list_scores, dtype='float64')
     numpy_names = np.array(list_names, dtype='float64')
     scores = np.concatenate((numpy_scores, numpy_names), axis=0)
-    scores = scores.reshape((2, 800))
+    scores = scores.reshape((2, 80))
     print(scores)
 
     # print(scores.dtype)
@@ -115,6 +111,7 @@ def get_highesr_scores(template_dir, img_path, result_dir):
     high_img_name = dict_angle_img_name[max_scores]
     four_point_old = high_img_name.split('_')[4:-1]
     old_point = []
+
     print(dict_angle_img_result)
     top_left = dict_angle_img_result[max_scores]
     for i in range(4):
@@ -131,48 +128,19 @@ def get_highesr_scores(template_dir, img_path, result_dir):
     w_img, h_img = high_score_img.shape[::-1]
     match_img=img[top_left[1]:top_left[1] + h_img, top_left[0]:top_left[0] + w_img]
     result_sub= cv.absdiff(match_img,high_score_img)
+    print(result_sub)
     result_sub_path =  result_dir +'cut/'+ img_path.split('/')[-1]
     cv.imwrite(result_sub_path, result_sub)
 
-
-
-
-
-
     #对差值进行二值化
-    ret, thresh2 = cv.threshold(result_sub, 95, 255, cv.THRESH_BINARY)
+    ret, thresh2 = cv.threshold(result_sub, 95, 250, cv.THRESH_BINARY)
     process_result_sub_path = result_dir + 'process/' + img_path.split('/')[-1]
     cv.imwrite(process_result_sub_path, thresh2)
 
-    #去除顶帽
-    ret, high_score_img= cv.threshold(high_score_img, 60, 255,cv.THRESH_BINARY )
-    kernel = cv.getStructuringElement(cv.MORPH_RECT, (7, 7))
-    # 腐蚀图像
-    eroded = cv.erode(high_score_img, kernel)
-    #膨胀图像
-    kerne2 = cv.getStructuringElement(cv.MORPH_RECT,(5, 5))
-    dilated = cv.dilate(high_score_img,kerne2)
-    chazhi = dilated-eroded
-    dingmao_path = result_dir + 'dingmao/' + img_path.split('/')[-1]
-    cv.imwrite(dingmao_path, chazhi)
-
-    # 处理差值
-    chazhi[chazhi > 0] = 1
-    chazhi = 1 - chazhi
-    dingmao_reult = result_sub * chazhi
-    ret, thresh3 = cv.threshold(dingmao_reult, 40, 255, cv.THRESH_BINARY)
-    dingmao_reult_path = result_dir + 'dingmao_result/' + img_path.split('/')[-1]
-    cv.imwrite(dingmao_reult_path,dingmao_reult)
-
-    result_add = thresh3 + thresh2
-    result_add_path_path = result_dir + 'add_result/' + img_path.split('/')[-1]
-    cv.imwrite(result_add_path_path,result_add)
-
-
     #显示检测到的缺陷
     thresh2  = get_detection_result(thresh2)
-    error_path = result_dir + 'show_error/' + img_path.split('/')[-1]
-    cv.imwrite(error_path, thresh2)
+    process_result_sub_path = result_dir + 'show_error/' + img_path.split('/')[-1]
+    cv.imwrite(process_result_sub_path, thresh2)
 
 
 
@@ -186,9 +154,9 @@ def get_highesr_scores(template_dir, img_path, result_dir):
 
 
 
-template_dir = '/home/lqy/Data/phone/mi_6/800data-add15_0/white/cut/'
+template_dir = '/home/lqy/Data/phone/mi_6/data-add15_0/white/cut/'
 img_dir = '/home/lqy/Data/phone/mi_6/7_9/white_2/'
-result_path = '/home/lqy/Data/phone/mi_6/800_bad_img_detection_result_15_white2/'
+result_path = '/home/lqy/Data/phone/mi_6/bad_img_detection_result_15_white2/'
 mkdir(result_path)
 img_paths, img_names = eachFile(img_dir)
 for img_path in img_paths:
