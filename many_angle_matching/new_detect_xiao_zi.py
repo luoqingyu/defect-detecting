@@ -103,7 +103,6 @@ def get_highesr_scores(template_dir, img_path, result_dir,data_csv):
     p.join()
     numpy_scores = np.array(list_scores, dtype='float64')
     numpy_names = np.array(list_names, dtype='float64')
-
     scores = np.concatenate((numpy_scores, numpy_names), axis=0)
     scores = scores.reshape((2, 80))
     # print(scores.dtype)

@@ -3,6 +3,8 @@
 根据一张图像模板，旋转该图片生成多角度模板
 一级模板，涵盖logo的矩形框
 二级模板，实际的logo框
+修改日志
+7/26  将旋转中心由图片中心变成框中心
 '''
 import cv2
 import numpy  as np
@@ -54,6 +56,8 @@ num:生成图片的数目
 result_dir:生成图片的位置
 '''
 def creat_img(im_name,angle, Scale,result_dir,writer,num=80,):
+    #大框位置
+    point_big_boxes = [(617,307), (1771,727)]
     #创建截取模板的文件夹
     cut_dir = result_dir +'cut'+'/'
     mkdir(cut_dir)
@@ -89,9 +93,6 @@ def creat_img(im_name,angle, Scale,result_dir,writer,num=80,):
         #Pts = np.array([[610, 411], [2150,412], [2150, 561], [609,561]], np.int32)
 
         #计算实际模板对应的新的位置
-
-
-
         new_pts = []
         new_pts.append(str(i))
         str_four_point_pts =  get_many_romate_point(Pts,w_img , h_img ,i)
